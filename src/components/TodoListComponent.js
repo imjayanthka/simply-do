@@ -1,8 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
 import RadioButton from 'material-ui/RadioButton';
 import { List, ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
+
+const mapStateToProps = state => {
+  return { todoListItems: state.todoListItems };
+};
 
 class TodoListItem extends React.Component {
   render() {
@@ -31,21 +36,10 @@ class TodoListItem extends React.Component {
   }
 }
 
-export default class TodoListComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      todoItems: []
-    };
-  }
+const ConnectedTodoListComponent = ({ todoListItems }) => {
+  return <TodoListItem todoItems={todoListItems} />;
+};
 
-  componentDidMount() {
-    this.setState({
-      todoItems: [{ taskName: 'Buy Milk' }]
-    });
-  }
+const TodoListComponent = connect(mapStateToProps)(ConnectedTodoListComponent);
 
-  render() {
-    return <TodoListItem todoItems={this.state.todoItems} />;
-  }
-}
+export default TodoListComponent;

@@ -1,23 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import AppBar from 'material-ui/AppBar';
 import TodoListComponent from './components/TodoListComponent';
-import AddTodoItem from './components/AddTodoItem';
-
+import AddTodoItemButton from './components/AddTodoItemButton';
+import AddToDoItem from './components/AddToDoItem';
+import { connect } from 'react-redux';
 import './App.css';
 
-class App extends Component {
-  render() {
-    return (
-      <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
-        <AppBar title="Personal To Do" />
-        <TodoListComponent />
-        <AddTodoItem />
-      </MuiThemeProvider>
-    );
-  }
-}
+const mapStateToProps = state => {
+  return { addToDoButtonClicked: state.addToDoButtonClicked };
+};
+
+const ConnectedApp = ({ addToDoButtonClicked }) => {
+  return (
+    <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
+      <AppBar title="Personal To Do" />
+      {!addToDoButtonClicked && <TodoListComponent />}
+      {addToDoButtonClicked && <AddToDoItem />}
+      {!addToDoButtonClicked && <AddTodoItemButton />}
+    </MuiThemeProvider>
+  );
+};
+
+const App = connect(mapStateToProps)(ConnectedApp);
 
 export default App;
