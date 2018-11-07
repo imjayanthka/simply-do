@@ -13,13 +13,13 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		toggleTodoStatus: () => dispatch(toggleTodoStatus())
+		toggleTodoStatus: todo => dispatch(toggleTodoStatus(todo))
 	};
 };
 
 class TodoListItem extends React.Component {
-	handleToogleTaskCompletion = event => {
-		console.log("handleToogleTaskCompletion");
+	handleToogleTaskCompletion = todoItem => {
+		this.props.toggleTodoStatus(todoItem);
 	};
 
 	render() {
@@ -39,14 +39,14 @@ class TodoListItem extends React.Component {
 			return (
 				<List>
 					{this.props.todoItems.map(todoItem => (
-						<div>
-							<ListItem key={todoItem.id} class="list-item-container">
+						<div key={todoItem.id}>
+							<ListItem className="list-item-container">
 								<FormControlLabel
 									control={
 										<Checkbox
 											checked={todoItem.isCompleted}
-											onChange={this.handleToogleTaskCompletion}
-											value="checkedG"
+											onChange={() => this.handleToogleTaskCompletion(todoItem)}
+											value={todoItem.id}
 										/>
 									}
 									label={todoItem.taskName}
@@ -61,8 +61,13 @@ class TodoListItem extends React.Component {
 	}
 }
 
-const ConnectedTodoListComponent = ({ todoListItems }) => {
-	return <TodoListItem todoItems={todoListItems} />;
+const ConnectedTodoListComponent = ({ todoListItems, toggleTodoStatus }) => {
+	return (
+		<TodoListItem
+			todoItems={todoListItems}
+			toggleTodoStatus={toggleTodoStatus}
+		/>
+	);
 };
 
 const TodoListComponent = connect(
