@@ -6,8 +6,8 @@
 */
 
 .add-item-button {
-  position: fixed;
-  float: right;
-  right: 10px;
-  bottom: 10px;
+	position: fixed !important;
+	float: right;
+	right: 10px;
+	bottom: 10px;
 }

@@ -1,4 +1,8 @@
-import { ADD_TODO, TOGGLE_ADD_FORM } from '../cosntants/action-types';
+import {
+  ADD_TODO,
+  TOGGLE_ADD_FORM,
+  TOGGLE_TODO
+} from '../cosntants/action-types';
 
 const initalState = {
   todoListItems: [],
@@ -15,6 +19,8 @@ const rootRedcuer = (state = initalState, action) => {
         addToDoButtonClicked: !state.addToDoButtonClicked,
         todoListItems: [...state.todoListItems, action.payload]
       };
+    case TOGGLE_TODO:
+      return {};
     default:
       return state;
   }
