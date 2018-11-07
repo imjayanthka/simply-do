@@ -31,10 +31,9 @@ const rootRedcuer = (state = initalState, action) => {
 		case TOGGLE_TODO:
 			return {
 				...state,
-				todoListItems: toggleTodoStatusHelper(
-					state.todoListItems,
-					action.payload
-				)
+				todoListItems: [
+					...toggleTodoStatusHelper(state.todoListItems, action.payload)
+				]
 			};
 		default:
 			return state;

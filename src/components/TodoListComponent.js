@@ -17,62 +17,48 @@ const mapDispatchToProps = dispatch => {
 	};
 };
 
-class TodoListItem extends React.Component {
-	handleToogleTaskCompletion = todoItem => {
-		this.props.toggleTodoStatus(todoItem);
-	};
-
-	render() {
-		if (this.props.todoItems && this.props.todoItems.length === 0) {
-			return (
-				<Grid
-					container
-					direction="row"
-					justify="center"
-					alignItems="center"
-					className="no-items-container"
-				>
-					Yay. You have completed all your tasks.
-				</Grid>
-			);
-		} else {
-			return (
-				<List>
-					{this.props.todoItems.map(todoItem => (
-						<div key={todoItem.id}>
-							<ListItem className="list-item-container">
-								<FormControlLabel
-									control={
-										<Checkbox
-											checked={todoItem.isCompleted}
-											onChange={() => this.handleToogleTaskCompletion(todoItem)}
-											value={todoItem.id}
-										/>
-									}
-									label={todoItem.taskName}
-								/>
-							</ListItem>
-							<Divider />
-						</div>
-					))}
-				</List>
-			);
-		}
+const ConnectedTodoListItem = ({ todoListItems, toggleTodoStatus }) => {
+	if (todoListItems && todoListItems.length === 0) {
+		return (
+			<Grid
+				container
+				direction="row"
+				justify="center"
+				alignItems="center"
+				className="no-items-container"
+			>
+				Yay. You have completed all your tasks.
+			</Grid>
+		);
+	} else {
+		return (
+			<List>
+				{todoListItems.map(todoItem => (
+					<div key={todoItem.id}>
+						<ListItem className="list-item-container">
+							<FormControlLabel
+								control={
+									<Checkbox
+										checked={todoItem.isCompleted}
+										onChange={() => toggleTodoStatus(todoItem)}
+										value={todoItem.id}
+										color="primary"
+									/>
+								}
+								label={todoItem.taskName}
+							/>
+						</ListItem>
+						<Divider />
+					</div>
+				))}
+			</List>
+		);
 	}
-}
-
-const ConnectedTodoListComponent = ({ todoListItems, toggleTodoStatus }) => {
-	return (
-		<TodoListItem
-			todoItems={todoListItems}
-			toggleTodoStatus={toggleTodoStatus}
-		/>
-	);
 };
 
 const TodoListComponent = connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(ConnectedTodoListComponent);
+)(ConnectedTodoListItem);
 
 export default TodoListComponent;
