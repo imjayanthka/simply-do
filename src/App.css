@@ -1,4 +1,13 @@
 .no-items-container {
+	position: fixed;
+	padding: 0;
+	margin: 0;
+
+	top: 0;
+	left: 0;
+
+	width: 100%;
+	height: 100%;
 }
 
 /* 
@@ -10,4 +19,10 @@
 	float: right;
 	right: 10px;
 	bottom: 10px;
+}
+
+.list-item-container {
+	background-color: black;
+	padding-left: 10px;
+	padding-right: 10px;
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { List, ListItem } from "@material-ui/core";
@@ -25,18 +25,22 @@ class TodoListItem extends React.Component {
 	render() {
 		if (this.props.todoItems && this.props.todoItems.length === 0) {
 			return (
-				<Paper>
-					<div className="no-items-container">
-						Yay. You have completed all your tasks.
-					</div>
-				</Paper>
+				<Grid
+					container
+					direction="row"
+					justify="center"
+					alignItems="center"
+					className="no-items-container"
+				>
+					Yay. You have completed all your tasks.
+				</Grid>
 			);
 		} else {
 			return (
 				<List>
 					{this.props.todoItems.map(todoItem => (
-						<Paper key={todoItem.id} className="list-item-container">
-							<ListItem>
+						<div>
+							<ListItem key={todoItem.id} class="list-item-container">
 								<FormControlLabel
 									control={
 										<Checkbox
@@ -49,7 +53,7 @@ class TodoListItem extends React.Component {
 								/>
 							</ListItem>
 							<Divider />
-						</Paper>
+						</div>
 					))}
 				</List>
 			);
