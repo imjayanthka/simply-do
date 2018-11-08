@@ -7,6 +7,8 @@ import { List, ListItem } from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
 import { toggleTodoStatus } from "../actions/index";
 
+import TodoStatusTabs from "./TodoStatusTabs";
+
 const mapStateToProps = state => {
 	return { todoListItems: state.todoListItems };
 };
@@ -32,26 +34,29 @@ const ConnectedTodoListItem = ({ todoListItems, toggleTodoStatus }) => {
 		);
 	} else {
 		return (
-			<List>
-				{todoListItems.map(todoItem => (
-					<div key={todoItem.id}>
-						<ListItem className="list-item-container">
-							<FormControlLabel
-								control={
-									<Checkbox
-										checked={todoItem.isCompleted}
-										onChange={() => toggleTodoStatus(todoItem)}
-										value={todoItem.id}
-										color="primary"
-									/>
-								}
-								label={todoItem.taskName}
-							/>
-						</ListItem>
-						<Divider />
-					</div>
-				))}
-			</List>
+			<div>
+				<TodoStatusTabs />
+				<List>
+					{todoListItems.map(todoItem => (
+						<div key={todoItem.id}>
+							<ListItem className="list-item-container">
+								<FormControlLabel
+									control={
+										<Checkbox
+											checked={todoItem.isCompleted}
+											onChange={() => toggleTodoStatus(todoItem)}
+											value={todoItem.id}
+											color="primary"
+										/>
+									}
+									label={todoItem.taskName}
+								/>
+							</ListItem>
+							<Divider />
+						</div>
+					))}
+				</List>
+			</div>
 		);
 	}
 };

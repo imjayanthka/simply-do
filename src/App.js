@@ -5,14 +5,14 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import TodoListComponent from "./components/TodoListComponent";
 import AddTodoItemButton from "./components/AddTodoItemButton";
-import AddToDoItem from "./components/AddToDoItem";
+import AddToDoItem from "./components/AddTodoItem";
 import { toggleAddForm } from "./actions/index";
 import { connect } from "react-redux";
 import "./App.css";
 
 const theme = createMuiTheme({
 	palette: {
-		type: "dark" // Switching the dark mode on is a single property value change.
+		type: "light" // Switching the dark mode on is a single property value change.
 	},
 	typography: {
 		useNextVariants: true
@@ -44,6 +44,7 @@ class ConnectedApp extends React.Component {
 						</Typography>
 					</Toolbar>
 				</AppBar>
+
 				{!this.props.addToDoButtonClicked && <TodoListComponent />}
 				<AddToDoItem
 					open={this.props.addToDoButtonClicked}
