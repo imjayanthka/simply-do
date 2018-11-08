@@ -13,7 +13,8 @@ var masterTodoList = [];
 const initalState = {
 	todoListItems: [],
 	addToDoButtonClicked: false,
-	selectedTab: 0
+	selectedTab: 0,
+	totalTasks: 0
 };
 
 const addToDoItemHelper = todo => {
@@ -27,9 +28,13 @@ const toggleTodoStatusHelper = (payload, selectedTab) => {
 			masterTodoList[i].isCompleted = !masterTodoList[i].isCompleted;
 		}
 	}
-	if (selectedTab === 0) return masterTodoList;
-	else if (selectedTab === 1) return filterCompletedTasksHelper();
-	else return fitlerPendingTasksHelper();
+	if (selectedTab === 0) {
+		return masterTodoList;
+	} else if (selectedTab === 2) {
+		return filterCompletedTasksHelper();
+	} else {
+		return fitlerPendingTasksHelper();
+	}
 };
 
 const filterCompletedTasksHelper = () => {
@@ -47,37 +52,52 @@ const fitlerPendingTasksHelper = () => {
 const rootRedcuer = (state = initalState, action) => {
 	switch (action.type) {
 		case TOGGLE_ADD_FORM:
-			return { ...state, addToDoButtonClicked: !state.addToDoButtonClicked };
+			return {
+				...state,
+				addToDoButtonClicked: !state.addToDoButtonClicked,
+				totalTasks: masterTodoList.length
+			};
 		case CHANGE_SELECTED_TAB:
-			return { ...state, selectedTab: action.payload };
+			return {
+				...state,
+				selectedTab: action.payload,
+				totalTasks: masterTodoList.length
+			};
 		case ADD_TODO:
 			return {
 				...state,
 				addToDoButtonClicked: !state.addToDoButtonClicked,
-				todoListItems: [...addToDoItemHelper(action.payload)]
+				todoListItems: [...addToDoItemHelper(action.payload)],
+				totalTasks: masterTodoList.length
 			};
 		case TOGGLE_TODO:
 			return {
 				...state,
-				todoListItems: [...toggleTodoStatusHelper(action.payload)]
+				todoListItems: [
+					...toggleTodoStatusHelper(action.payload, state.selectedTab)
+				],
+				totalTasks: masterTodoList.length
 			};
 		case FILTER_COMPLETED_TASKS:
 			return {
 				...state,
-				todoListItems: [...filterCompletedTasksHelper()]
+				todoListItems: [...filterCompletedTasksHelper()],
+				totalTasks: masterTodoList.length
 			};
 		case FILTER_ALL_TODOS:
 			return {
 				...state,
-				todoListItems: [...masterTodoList]
+				todoListItems: [...masterTodoList],
+				totalTasks: masterTodoList.length
 			};
 		case FILTER_PENDING_TODOS:
 			return {
 				...state,
-				todoListItems: [...fitlerPendingTasksHelper()]
+				todoListItems: [...fitlerPendingTasksHelper()],
+				totalTasks: masterTodoList.length
 			};
 		default:
-			return state;
+			return { ...state, totalTasks: masterTodoList.length };
 	}
 };
 

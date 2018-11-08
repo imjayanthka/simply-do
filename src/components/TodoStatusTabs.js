@@ -25,7 +25,6 @@ const mapStateToProps = state => {
 
 class ConnectedTodoStatusTabs extends React.Component {
 	handleChange = (event, value) => {
-		console.log(value);
 		this.props.changeSelectedTab(value);
 		switch (value) {
 			case 1:

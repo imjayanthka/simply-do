@@ -10,7 +10,11 @@ import { toggleTodoStatus } from "../actions/index";
 import TodoStatusTabs from "./TodoStatusTabs";
 
 const mapStateToProps = state => {
-	return { todoListItems: state.todoListItems };
+	return {
+		todoListItems: state.todoListItems,
+		totalTasks: state.totalTasks,
+		selectedTab: state.selectedTab
+	};
 };
 
 const mapDispatchToProps = dispatch => {
@@ -19,8 +23,13 @@ const mapDispatchToProps = dispatch => {
 	};
 };
 
-const ConnectedTodoListItem = ({ todoListItems, toggleTodoStatus }) => {
-	if (todoListItems && todoListItems.length === 0) {
+const ConnectedTodoListItem = ({
+	todoListItems,
+	totalTasks,
+	toggleTodoStatus,
+	selectedTab
+}) => {
+	if (totalTasks === 0) {
 		return (
 			<Grid
 				container
@@ -36,26 +45,46 @@ const ConnectedTodoListItem = ({ todoListItems, toggleTodoStatus }) => {
 		return (
 			<div>
 				<TodoStatusTabs />
-				<List>
-					{todoListItems.map(todoItem => (
-						<div key={todoItem.id}>
-							<ListItem className="list-item-container">
-								<FormControlLabel
-									control={
-										<Checkbox
-											checked={todoItem.isCompleted}
-											onChange={() => toggleTodoStatus(todoItem)}
-											value={todoItem.id}
-											color="primary"
-										/>
-									}
-									label={todoItem.taskName}
-								/>
-							</ListItem>
-							<Divider />
-						</div>
-					))}
-				</List>
+				{todoListItems && todoListItems.length !== 0 && (
+					<List>
+						{todoListItems.map(todoItem => (
+							<div key={todoItem.id}>
+								<ListItem className="list-item-container">
+									<FormControlLabel
+										control={
+											<Checkbox
+												checked={todoItem.isCompleted}
+												onChange={() => toggleTodoStatus(todoItem)}
+												value={todoItem.id}
+												color="primary"
+											/>
+										}
+										label={todoItem.taskName}
+									/>
+								</ListItem>
+								<Divider />
+							</div>
+						))}
+					</List>
+				)}
+				{!todoListItems && todoListItems.length === 0 && (
+					<Grid
+						container
+						direction="row"
+						justify="center"
+						alignItems="center"
+						className="no-items-container"
+					>
+						{`Yay. You have ${
+							selectedTab === 1
+								? "no pending tasks"
+								: selectedTab === "2"
+								? "not completed any task"
+								: ""
+						}.`}
+						s
+					</Grid>
+				)}
 			</div>
 		);
 	}
