@@ -5,7 +5,8 @@ import {
 	FILTER_COMPLETED_TASKS,
 	FILTER_ALL_TODOS,
 	FILTER_PENDING_TODOS,
-	CHANGE_SELECTED_TAB
+	CHANGE_SELECTED_TAB,
+	DELETE_TODO
 } from "../cosntants/action-types";
 
 export const addToDo = todo => ({ type: ADD_TODO, payload: todo });
@@ -33,3 +34,9 @@ export const changeSelectedTab = selectedTab => ({
 	type: CHANGE_SELECTED_TAB,
 	payload: selectedTab
 });
+
+
+export const deleteTodoItem = todo => ({
+	type: DELETE_TODO,
+	payload: todo
+})
